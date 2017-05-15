@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<title>Pink House</title>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body>
+	<div class="nav-bar">
+		<div class="nav-container">
+			<div class="nav-logo">
+				<img src="../img/teto.png">
+				<h1>PinkHouse</h1>
+				<p>Serviços de Reforma Residencial e Projetos</p>
+			</div>
+
+			<div class="nav-links">
+				<a href="/">Página Inicial</a>
+				<a href="/servicos">Serviços</a>
+				<a href="/trabalhe-conosco">Trabalhe Conosco</a>
+				<a href="/contato">Contato</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="content">
+		
+		<div class="bem-vindo background-secondary">
+			<div class="alone-title">
+				<h1>Entre em contato</h1>				
+			</div>
+		</div>
+
+		<div class="formulario">
+
+			<h2>Fale Conosco</h2>
+
+			
+			<input type="text" id="nome" name="nome" placeholder="Nome Completo">
+			<input type="text" id="email" name="email" placeholder="E-mail">
+			<input type="text" id="telefone" name="telefone" placeholder="Telefone para Contato">
+			<textarea placeholder="Mensagem" id="mensagem"></textarea>
+			<button class="btn" name="nome" placeholder="Nome Completo" onclick="enviar(event)">Enviar</button>
+
+			
+		</div>
+
+
+	</div>
+
+	<div class="footer">
+		<p>Rua Dom José Gaspar, 395 - Belo Horizonte / MG</p>
+		<p>(31) 98898-8441 (VIVO / (31) 99302-1877 (TIM)</p>
+		<p>camillateodoro@pinkhouse.eng.br</p>
+	</div>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyCULAA5JKVKv5kltm7Qe4qxVLMnrcBP0YA",
+			authDomain: "pink-house-3d92c.firebaseapp.com",
+			databaseURL: "https://pink-house-3d92c.firebaseio.com",
+			storageBucket: "pink-house-3d92c.appspot.com",
+			messagingSenderId: "593259266400"
+		};
+		firebase.initializeApp(config);
+
+		var database = firebase.database();
+
+		function enviar(e) {
+
+			var nome = document.getElementById('nome');
+			var email = document.getElementById('email');
+			var telefone = document.getElementById('telefone');
+			var mensagem = document.getElementById('mensagem');
+
+			var msg = {
+				nome : nome.value,
+				email : email.value,
+				telefone : telefone.value,
+				mensagem : mensagem.value
+			};
+
+			database.ref('mensagens').push(msg).then(function (resposta) {
+				nome.value = '';
+				email.value = '';
+				telefone.value = '';
+				mensagem.value = '';
+
+				var key = resposta.key;
+
+				alert("Mensagem enviada com sucesso!");
+			});
+
+			
+		}
+	</script>
+
+</body>
+</html>
